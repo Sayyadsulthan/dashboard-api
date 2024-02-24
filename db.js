@@ -13,10 +13,10 @@ const createTransactionTable = () => {
     pool.query(
         `CREATE TABLE IF NOT EXISTS transactions(
             id INT NOT NULL,
-            title VARCHAR(50),
-            price INT,
-            description VARCHAR NOT NULL,
-            category VARCHAR(255) NOT NULL,
+            title VARCHAR,
+            price NUMERIC(10, 2),
+            description VARCHAR,
+            category VARCHAR ,
             image TEXT,
             sold BOOLEAN,
             dateOfSale TIMESTAMPTZ,
@@ -24,7 +24,7 @@ const createTransactionTable = () => {
     );`,
         [],
         (err, result) => {
-            console.log(err ? 'Error in Create table \n' + err : result + '\n table created....');
+            console.log(err ? 'Error in Create table \n' + err : ' table created....');
         }
     );
 };

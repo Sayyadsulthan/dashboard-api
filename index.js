@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const fs = require('fs');
 const PORT = process.env.PORT || 8000;
 
 const data = require('./data.json');
@@ -14,7 +15,8 @@ pool.connect()
     })
     .catch((err) => console.log('rejected \n ', err));
 
-/* RUN THIS COMMAND ONCE RUN  
+/* RUN THIS COMMAND ONCE RUN 1st run   */
+
 // function runTableQuery() {
 //     try {
 //         createTransactionTable();
@@ -24,6 +26,41 @@ pool.connect()
 //     }
 // }
 // runTableQuery();
-                
-*/
+
+/* RUN THIS COMMAND ONCE RUN  2nd run */
+
+// function addDataTOTable() {
+//     // pool.query('SELECT * FROM transactions', []).then((res) => console.log(res.rows));
+//     fs.readFile('./data.json', 'utf-8', (error, data) => {
+//         if (error) {
+//             console.log('Error in json file');
+//             return;
+//         }
+//         const Data = JSON.parse(data);
+
+//         try {
+//             Data.forEach((item) => {
+//                 let { id, title, price, description, category, image, sold, dateOfSale } = item;
+//                 price = JSON.parse(Number(price).toFixed(2));
+//                 if (typeof price === 'string') {
+//                     price = Number(price);
+//                 }
+//                 pool.query(
+//                     `INSERT INTO transactions (id, title, price, description, category, image, sold, dateOfSale)
+//             VALUES
+//             ($1,$2,$3,$4,$5,$6,$7,$8);
+//             `,
+//                     [id, title, price, description, category, image, sold, dateOfSale]
+//                 )
+//                     .then(() => console.log(' data inserted successfull...'))
+//                     .catch((err) => console.log('Error executing query:', err));
+//             });
+//             console.log('every transactions done .....');
+//         } catch (err) {
+//             console.log('err**', err.message);
+//         }
+//     });
+// }
+// addDataTOTable();
+
 app.listen(PORT, () => console.log('Server is running on Port :', PORT));
