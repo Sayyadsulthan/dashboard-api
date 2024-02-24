@@ -4,10 +4,12 @@ require('dotenv').config();
 const fs = require('fs');
 const PORT = process.env.PORT || 8000;
 
-const data = require('./data.json');
 const { createTransactionTable, pool } = require('./db.js');
+const { getAllTransactions } = require('./controller/transactionController.js');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/api/transactions', getAllTransactions);
 
 pool.connect()
     .then((value) => {
@@ -30,7 +32,6 @@ pool.connect()
 /* RUN THIS COMMAND ONCE RUN  2nd run */
 
 // function addDataTOTable() {
-//     // pool.query('SELECT * FROM transactions', []).then((res) => console.log(res.rows));
 //     fs.readFile('./data.json', 'utf-8', (error, data) => {
 //         if (error) {
 //             console.log('Error in json file');
