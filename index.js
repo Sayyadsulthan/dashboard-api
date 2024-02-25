@@ -9,6 +9,7 @@ const { getAllTransactions } = require('./controller/transactionController.js');
 const { getStatisticsFromMonth } = require('./controller/statisticsController.js');
 const { getPieData } = require('./controller/pieChartController.js');
 const { getBarData } = require('./controller/barChartController.js');
+const { default: axios } = require('axios');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -16,6 +17,33 @@ app.get('/api/transactions', getAllTransactions);
 app.get('/api/statistics', getStatisticsFromMonth);
 app.get('/api/pie', getPieData);
 app.get('/api/bar', getBarData);
+app.get('/api/combined-data', async (req, res) => {
+    try {
+        let { month } = req.query;
+        let statisticsUrl = process.env.BASE_URL + PORT + '/api/statistics';
+        let pieUrl = process.env.BASE_URL + PORT + '/api/pie';
+        let barUrl = process.env.BASE_URL + PORT + '/api/bar';
+        if (month) {
+            statisticsUrl += `?month=${month}`;
+            pieUrl += `?month=${month}`;
+            barUrl += `?month=${month}`;
+        }
+        const [apiResponse1, apiResponse2, apiResponse3] = await Promise.all([
+            axios.get(statisticsUrl),
+            axios.get(pieUrl),
+            axios.get(barUrl),
+        ]);
+
+        const combinedData = {
+            apiData1: apiResponse1.data,
+            apiData2: apiResponse2.data,
+            apiData3: apiResponse3.data,
+        };
+        res.status(200).json({ success: true, ...combinedData });
+    } catch (err) {
+        res.status(500).json({ message: err.message, success: false });
+    }
+});
 pool.connect()
     .then((value) => {
         console.log('connection success \n ');
