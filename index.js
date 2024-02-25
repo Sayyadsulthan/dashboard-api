@@ -6,11 +6,12 @@ const PORT = process.env.PORT || 8000;
 
 const { createTransactionTable, pool } = require('./db.js');
 const { getAllTransactions } = require('./controller/transactionController.js');
+const { getStatisticsFromMonth } = require('./controller/statisticsController.js');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api/transactions', getAllTransactions);
-
+app.get('/api/statistics', getStatisticsFromMonth);
 pool.connect()
     .then((value) => {
         console.log('connection success \n ');
