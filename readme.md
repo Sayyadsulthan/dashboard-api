@@ -5,6 +5,8 @@
 
 # 1 Installation
 
+    Try to run in localhost
+
     To Install all the dependencies use command
         npm i / npm install
 
@@ -13,6 +15,23 @@
 
     To close the terminal use command
         control + C
+
+    If you have Postgresql Then use pgAdmin
+        login and with password
+        and put the database credentials in .env file
+
+        eg:-
+            USER = databse password
+
+            HOST_URL = "localhost"
+
+            USER_PASSWORD = DB user Password
+
+            DB_PORT = 5432
+
+            PORT = this is for app run
+
+            BASE_URL ="http://localhost:"
 
     # To run the command you need to first run the command which is commented in index.js file
         1) First uncomment the method runTableQuery();
@@ -25,7 +44,7 @@
             control + C
     comment the methods which are used above runTableQuery(); and addDataTOTable();
 
-# api usage
+# 2 api usage
 
         try to use in localhost
 
@@ -158,3 +177,12 @@
              "success": true
         },
     }
+
+# 3 To get the indivisual api data you can use the below api
+
+    eg:-
+        "http://localhost:8080/api/statistics"
+        "http://localhost:8080/api/pie"
+        "http://localhost:8080/api/bar"
+
+# Thank You for spending time in reading the docs...
